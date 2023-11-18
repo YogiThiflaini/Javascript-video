@@ -5,6 +5,7 @@
     $data = stripslashes(file_get_contents("php://input"));
     $datapelanggan = json_decode($data, true);
 
+    $idpelanggan = $datapelanggan['idpelanggan'];
     $pelanggan = $datapelanggan['pelanggan'];
     $alamat = $datapelanggan['alamat'];
     $telp = $datapelanggan['telp'];
@@ -12,14 +13,17 @@
 
 
     if (!empty($pelanggan) && !empty($alamat) && !empty($telp)) {
-        $sql = "INSERT INTO tblpelanggan VALUES('','$pelanggan','$alamat','$telp','','','')"; // ditambah 3 dikarenakan di phpmyadmin saya ada tambahan 3 kolom
+        $sql = "UPDATE tblpelanggan SET 
+            pelanggan='$pelanggan', 
+            alamat='$alamat',
+            telp='$telp'
+            WHERE idpelanggan=$idpelanggan"; 
             if ($result = mysqli_query($con,$sql)) {
-                echo "data tersimpan!!";
+                echo "data diubah!!";
             } else {
-                echo "data tidak tersimpan!!";
+                echo "data tidak diubah!!";
             }
     } else {
         echo "data tidak diterima";
     }
     
-
